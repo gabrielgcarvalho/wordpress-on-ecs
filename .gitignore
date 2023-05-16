@@ -31,3 +31,4 @@ terraform.tfvars
 # Other files and directories that should not be versioned
 bin/
 vendor/
+wp-config.php
