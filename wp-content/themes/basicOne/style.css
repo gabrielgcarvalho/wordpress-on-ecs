@@ -1,0 +1,21 @@
+/*
+Theme Name: BasicONE
+Theme URI: http://exemplo.com/
+Author: Gabriel G
+Author URI: http://siteexample.com/
+Description: 
+Version: 1.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: basicONE
+*/
+
+body {
+    background-color: #4386bd;
+    color: #e0e0e0;
+    font-family: Arial, sans-serif;
+}
+
+h1, h2, h3 {
+    color: #b8b8b8;
+}
