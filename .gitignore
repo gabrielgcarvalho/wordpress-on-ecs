@@ -1,0 +1,33 @@
+# Log files
+log/
+
+# Backup files
+backup/
+
+# Temporary files
+tmp/
+
+# Terraform state files
+*.tfstate
+*.tfstate.*
+
+# Terraform backup and temporary files
+*.tfplan
+*.backup
+*.bak
+*.tfvars
+
+# .terraform directory
+**/.terraform/
+
+# Local configuration files
+.env
+terraform.tfvars
+
+# Generated files
+*.tfvars.json
+*.tfvars.tf
+
+# Other files and directories that should not be versioned
+bin/
+vendor/
