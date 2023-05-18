@@ -27,9 +27,6 @@ variable "container_port" {
   default = 80
 }
 
-variable "host_port" {
-  default = 8080
-}
 
 variable "mount_points" {
   default = ""
