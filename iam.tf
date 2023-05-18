@@ -60,9 +60,7 @@ resource "aws_iam_role" "wp-ecs-task-execution-role" {
 
 resource "aws_iam_role_policy" "wp-ecs-task-execution-policy" {
   name = "wp-ecs-task-execution-policy"
-  role = aws_iam_role.wp-ecs-service-role.id
-
-  depends_on = [aws_cloudwatch_log_group.wp-cloudwatch-log-group]
+  role = aws_iam_role.wp-ecs-task-execution-role.id
 
   policy = jsonencode(
     {
@@ -108,7 +106,7 @@ resource "aws_iam_role" "wp-ecs-task-role" {
 
 resource "aws_iam_role_policy" "wp-ecs-task-policy" {
   name = "wp-ecs-task-policy"
-  role = aws_iam_role.wp-ecs-service-role.id
+  role = aws_iam_role.wp-ecs-task-role
 
   depends_on = [aws_cloudwatch_log_group.wp-cloudwatch-log-group]
 
