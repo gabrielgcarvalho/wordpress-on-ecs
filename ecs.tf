@@ -53,7 +53,8 @@ resource "aws_ecs_service" "wp-ecs-service" {
   deployment_maximum_percent         = 200
   launch_type                        = "FARGATE"
   task_definition                    = aws_ecs_task_definition.wp-task-definition.id
-  desired_count                      = 1
+  desired_count                      = 0
+  health_check_grace_period_seconds  = 60
 
   network_configuration {
     subnets = [
@@ -70,6 +71,7 @@ resource "aws_ecs_service" "wp-ecs-service" {
     container_name   = var.container_name
     container_port   = 80
   }
+
 
   depends_on = [
     aws_iam_role.wp-ecs-service-role,
