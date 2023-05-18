@@ -19,3 +19,57 @@ resource "aws_security_group" "efs_security_group" {
     cidr_blocks = ["0.0.0.0/24"]
   }
 }
+
+resource "aws_security_group" "wp-alb-security-group" {
+  name        = "wp-alb-security-group"
+  description = "Security group for application load balancer"
+
+  vpc_id = aws_vpc.wp-vpc.id
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "HTTP"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "HTTPS"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "${var.cluster_name}-alb-sg"
+  }
+}
+
+resource "aws_security_group" "wp-ecs-task-security-group" {
+  name        = "wp-ecs-task-security-group"
+  description = "Security group for ECS Task"
+  vpc_id      = aws_vpc.wp-vpc.id
+  ingress {
+    from_port       = 80
+    to_port         = 80
+    protocol        = "tcp"
+    security_groups = [aws_security_group.wp-alb-security-group.id]
+    self            = true
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "${var.cluster_name}-task-sg"
+  }
+}
