@@ -106,7 +106,7 @@ resource "aws_iam_role" "wp-ecs-task-role" {
 
 resource "aws_iam_role_policy" "wp-ecs-task-policy" {
   name = "wp-ecs-task-policy"
-  role = aws_iam_role.wp-ecs-task-role
+  role = aws_iam_role.wp-ecs-task-role.id
 
   depends_on = [aws_cloudwatch_log_group.wp-cloudwatch-log-group]
 
