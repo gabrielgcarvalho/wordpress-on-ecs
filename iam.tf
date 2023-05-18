@@ -21,6 +21,8 @@ resource "aws_iam_role_policy" "wp-ecs-service-policy" {
   name = "wp-ecs-service-policy"
   role = aws_iam_role.wp-ecs-service-role.id
 
+  depends_on = [aws_cloudwatch_log_group.wp-cloudwatch-log-group]
+
   policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
@@ -30,7 +32,7 @@ resource "aws_iam_role_policy" "wp-ecs-service-policy" {
           "logs:CreateLogStream",
           "logs:PutLogEvent"
         ],
-        Resource = "*"
+        Resource = aws_cloudwatch_log_group.wp-cloudwatch-log-group.arn
       }
     ]
   })
