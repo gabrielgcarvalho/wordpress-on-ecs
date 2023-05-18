@@ -52,3 +52,50 @@ resource "aws_subnet" "private_subnet2" {
   cidr_block        = "10.0.0.192/26"
   availability_zone = "us-east-1b"
 }
+
+// Load Balancer
+
+resource "aws_alb" "wp-alb" {
+  name            = "wp-alb"
+  internal        = false
+  security_groups = [aws_security_group.wp-alb-security-group.id]
+  subnets = [
+    aws_subnet.public_subnet1.id,
+    aws_subnet.public_subnet2.id
+  ]
+}
+
+resource "aws_alb_target_group" "wp-alb-target-group" {
+
+  name        = "wp-alb-tg"
+  protocol    = "HTTP"
+  target_type = "ip"
+  port        = var.container_port
+  vpc_id      = aws_vpc.wp-vpc.id
+
+
+
+  health_check {
+    protocol = "HTTP"
+    matcher  = 200
+    path     = "/"
+
+    timeout             = 5
+    interval            = 30
+    healthy_threshold   = 2
+    unhealthy_threshold = 5
+
+  }
+}
+
+resource "aws_lb_listener" "wp-alb-listener" {
+  load_balancer_arn = aws_alb.wp-alb.arn
+  port              = 80
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_alb_target_group.wp-alb-target-group.arn
+  }
+}
+
