@@ -20,7 +20,7 @@ variable "desire_count" {
 }
 
 variable "container_image" {
-  default = "amazon/amazon-ecs-sample"
+  default = "wordpress:apache"
 }
 
 variable "container_port" {
@@ -36,3 +36,10 @@ variable "stream_prefix" {
   default = "wp"
 }
 
+
+variable "database" {
+  default = {
+    "username" = "admin",
+    "password" = "password"
+  }
+}

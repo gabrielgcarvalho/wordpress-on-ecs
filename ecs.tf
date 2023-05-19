@@ -34,10 +34,6 @@ resource "aws_ecs_task_definition" "wp-task-definition" {
       },
       "environment" = [
         {
-          "name"  = "VARIABLE",
-          "value" = "variable_value"
-        },
-        {
           "name"  = "ServerName",
           "value" = "localhost"
         }
@@ -75,6 +71,7 @@ resource "aws_ecs_service" "wp-ecs-service" {
 
   depends_on = [
     aws_iam_role.wp-ecs-service-role,
-    aws_ecs_task_definition.wp-task-definition
+    aws_ecs_task_definition.wp-task-definition,
+    aws_db_instance.wp-db
   ]
 }

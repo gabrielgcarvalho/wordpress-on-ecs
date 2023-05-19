@@ -99,3 +99,12 @@ resource "aws_lb_listener" "wp-alb-listener" {
   }
 }
 
+resource "aws_db_subnet_group" "wp-db-subnet-groups" {
+  name        = "wp-db-subnet-groups"
+  description = "WP DB subnet group"
+  subnet_ids = [
+    aws_subnet.private_subnet1.id,
+    aws_subnet.private_subnet2.id
+  ]
+}
+
