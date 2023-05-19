@@ -32,12 +32,6 @@ resource "aws_ecs_task_definition" "wp-task-definition" {
           "awslogs-stream-prefix" = "${var.stream_prefix}"
         }
       },
-      "mountPoints" : [
-        {
-          "sourceVolume" : "wp-efs-volume",
-          "containerPath" : "/mnt/efs"
-        }
-      ],
       "environment" = [
         {
           "name"  = "VARIABLE",
@@ -50,19 +44,6 @@ resource "aws_ecs_task_definition" "wp-task-definition" {
       ]
     }]
   )
-  volume {
-    name = "wp-efs-volume"
-    efs_volume_configuration {
-      file_system_id          = aws_efs_file_system.efs.id
-      root_directory          = "/usr/src/wordpress"
-      transit_encryption      = "ENABLED"
-      transit_encryption_port = 3049
-      authorization_config {
-        access_point_id = aws_efs_access_point.wp_efs_access_point.id
-        iam             = "ENABLED"
-      }
-    }
-  }
 }
 
 resource "aws_ecs_service" "wp-ecs-service" {
