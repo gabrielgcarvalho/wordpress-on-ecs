@@ -108,3 +108,33 @@ resource "aws_db_subnet_group" "wp-db-subnet-groups" {
   ]
 }
 
+// NAT Gateway
+
+resource "aws_eip" "wp-nat-eip" {
+  vpc = true
+}
+
+resource "aws_nat_gateway" "wp_nat_gateway" {
+  allocation_id = aws_eip.wp-nat-eip.id
+  subnet_id     = aws_subnet.public_subnet1.id
+}
+
+resource "aws_route_table" "private_route_table" {
+  vpc_id = aws_vpc.wp-vpc.id
+}
+
+resource "aws_route_table_association" "private_subnet1_association" {
+  subnet_id      = aws_subnet.private_subnet1.id
+  route_table_id = aws_route_table.private_route_table.id
+}
+
+resource "aws_route_table_association" "private_subnet2_association" {
+  subnet_id      = aws_subnet.private_subnet2.id
+  route_table_id = aws_route_table.private_route_table.id
+}
+
+resource "aws_route" "nat_gateway_route" {
+  route_table_id         = aws_route_table.private_route_table.id
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id         = aws_nat_gateway.wp_nat_gateway.id
+}
