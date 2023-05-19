@@ -17,3 +17,12 @@ resource "aws_efs_mount_target" "mount_target2" {
   subnet_id       = aws_subnet.public_subnet2.id
   security_groups = [aws_security_group.efs_security_group.id]
 }
+
+resource "aws_efs_access_point" "wp_efs_access_point" {
+  file_system_id = aws_efs_file_system.efs.id
+  posix_user {
+    uid = 1000
+    gid = 1000
+  }
+
+}

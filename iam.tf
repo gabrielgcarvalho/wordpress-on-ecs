@@ -72,7 +72,10 @@ resource "aws_iam_role_policy" "wp-ecs-task-execution-policy" {
             "ecr:GetDownloadUrlForLayer",
             "ecr:BatchGetImage",
             "logs:CreateLogStream",
-            "logs:PutLogEvents"
+            "logs:PutLogEvents",
+            "elasticfilesystem:ClientMount",
+            "elasticfilesystem:ClientWrite",
+            "elasticfilesystem:TransitEncryption"
           ],
           "Resource" = "*",
           "Effect"   = "Allow"
