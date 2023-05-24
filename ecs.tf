@@ -49,13 +49,13 @@ resource "aws_ecs_service" "wp-ecs-service" {
   deployment_maximum_percent         = 200
   launch_type                        = "FARGATE"
   task_definition                    = aws_ecs_task_definition.wp-task-definition.id
-  desired_count                      = 0
+  desired_count                      = 1
   health_check_grace_period_seconds  = 60
 
   network_configuration {
     subnets = [
-      aws_subnet.public_subnet1.id,
-      aws_subnet.public_subnet2.id
+      aws_subnet.private_subnet1.id,
+      aws_subnet.private_subnet2.id
     ]
 
     assign_public_ip = true
