@@ -9,7 +9,7 @@ resource "aws_security_group" "efs_security_group" {
     from_port   = 2049
     to_port     = 2049
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["0.0.0.0/24"]
   }
 
   ingress {
@@ -99,6 +99,6 @@ resource "aws_security_group" "wp-rds-security-group" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/24"]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 }

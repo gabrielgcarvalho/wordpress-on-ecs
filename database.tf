@@ -11,6 +11,7 @@ resource "aws_db_instance" "wp-db" {
   instance_class          = "db.t3.micro"
   allocated_storage       = 20
   storage_type            = "gp2"
+  db_name                 = "wordpress"
   username                = var.database.username
   password                = var.database.password
   db_subnet_group_name    = aws_db_subnet_group.wp-db-subnet-groups.name

@@ -72,7 +72,11 @@ resource "aws_iam_role_policy" "wp-ecs-task-execution-policy" {
             "ecr:GetDownloadUrlForLayer",
             "ecr:BatchGetImage",
             "logs:CreateLogStream",
-            "logs:PutLogEvents"
+            "logs:PutLogEvents",
+            "elasticfilesystem:ClientMount",
+            "elasticfilesystem:ClientWrite",
+            "elasticfilesystem:TransitEncryption",
+            "rds-db:connect"
           ],
           "Resource" = "*",
           "Effect"   = "Allow"
@@ -117,9 +121,6 @@ resource "aws_iam_role_policy" "wp-ecs-task-policy" {
         {
           "Action" : [
             "s3:GetObject",
-            "elasticfilesystem:ClientMount",
-            "elasticfilesystem:ClientWrite",
-            "elasticfilesystem:TransitEncryption"
           ],
           "Resource" = "*",
           "Effect"   = "Allow"
